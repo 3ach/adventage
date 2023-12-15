@@ -2,6 +2,9 @@
 name = "adventage"
 version = "0.1.0"
 edition = "2021"
+repository = "https://www.github.com/3ach/adventage"
+licence = "MIT"
+description = "Advent of Code, easier!"
 
 [lib]
 proc-macro = true
