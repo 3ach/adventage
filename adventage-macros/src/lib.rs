@@ -46,7 +46,7 @@ pub fn day(attrs: TokenStream) -> TokenStream {
 #[derive(Debug)]
 enum Answer {
     StringAnswer(String),
-    NumberAnswer(u32),
+    NumberAnswer(String),
 }
 
 impl Parse for Answer {
@@ -55,7 +55,7 @@ impl Parse for Answer {
 
         match literal {
             Lit::Str(ls) => Ok(Answer::StringAnswer(ls.value())),
-            Lit::Int(li) => Ok(Answer::NumberAnswer(li.base10_parse::<u32>()?)),
+            Lit::Int(li) => Ok(Answer::NumberAnswer(li.base10_digits().to_string())),
             _ => panic!(),
         }
     }
@@ -71,7 +71,7 @@ pub fn part1demo(attrs: TokenStream) -> TokenStream {
 
     let assertion = match &result[1] {
         Answer::StringAnswer(answer) => quote! { assert_eq!(answer, #answer); },
-        Answer::NumberAnswer(answer) => quote! { assert_eq!(answer, #answer); }
+        Answer::NumberAnswer(answer) => quote! { assert_eq!(answer, #answer.parse().unwrap()); }
     };
 
     let test: syn::ItemFn = syn::parse(quote! {
@@ -100,7 +100,7 @@ pub fn part2demo(attrs: TokenStream) -> TokenStream {
 
     let assertion = match &result[1] {
         Answer::StringAnswer(answer) => quote! { assert_eq!(answer, #answer); },
-        Answer::NumberAnswer(answer) => quote! { assert_eq!(answer, #answer); }
+        Answer::NumberAnswer(answer) => quote! { assert_eq!(answer, #answer.parse().unwrap()); }
     };
  
     let num = unsafe { DEMOS += 1; DEMOS };
