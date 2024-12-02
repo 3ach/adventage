@@ -5,6 +5,7 @@ use std::fs::File;
 use std::io;
 use std::io::prelude::*;
 use dirs::home_dir;
+use std::time::Duration;
 
 fn fetch_from_file() -> io::Result<String> {
     let mut file = File::open("input")?;
@@ -50,3 +51,16 @@ pub fn fetch_day(year: u32, day: u32) -> String {
     }
 }
 
+pub fn format_runtime(duration: Duration) -> String {
+    if duration.as_secs() > 0 {
+        format!("{} s", duration.as_secs())
+    } else if duration.as_millis() > 0 {
+        format!("{} ms", duration.as_millis())
+    } else if duration.as_micros() > 0 {
+        format!("{} us", duration.as_micros())
+    } else if duration.as_nanos() > 0 {
+        format!("{} ns", duration.as_nanos())
+    } else {
+        String::from("Less than one nanosecond. Did you get much better at programming?")
+    }
+}

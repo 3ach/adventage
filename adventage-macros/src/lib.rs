@@ -28,14 +28,25 @@ pub fn day(attrs: TokenStream) -> TokenStream {
 
     let main: syn::ItemFn = syn::parse(quote! {
         fn main() -> Result<(), ()> {
+            let fetch_start = std::time::Instant::now();
             let input = adventage::fetch_day(#year, #day);
-            let input = parse(&input);
+            let fetch_runtime = adventage::format_runtime(fetch_start.elapsed());
+            println!("Fetching the input took {fetch_runtime}");
 
-            let answer1 = part1(&input);
-            println!("Answer 1: {}", answer1);
+            let parsed_start = std::time::Instant::now();
+            let parsed = parse(&input);
+            let parse_runtime = adventage::format_runtime(parsed_start.elapsed());
+            println!("Parsing the input took {parse_runtime}");
 
-            let answer2 = part2(&input);
-            println!("Answer 2: {}", answer2);
+            let part1_start = std::time::Instant::now();
+            let answer1 = part1(&parsed);
+            let part1_runtime = adventage::format_runtime(part1_start.elapsed());
+            println!("Answer 1: {answer1}, took {part1_runtime}");
+
+            let part2_start = std::time::Instant::now();
+            let answer2 = part2(&parsed);
+            let part2_runtime = adventage::format_runtime(part2_start.elapsed());
+            println!("Answer 2: {answer2}, took {part2_runtime}");
             Ok(())
         }
     }.into()).unwrap();
