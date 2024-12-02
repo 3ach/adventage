@@ -104,7 +104,7 @@ pub fn part2demo(attrs: TokenStream) -> TokenStream {
     };
  
     let num = unsafe { DEMOS += 1; DEMOS };
-    let name = format_ident!("test_part1_{}", num);
+    let name = format_ident!("test_part2_{}", num);
 
     let test: syn::ItemFn = syn::parse(quote! {
         #[test]
