@@ -2,7 +2,7 @@
 name = "adventage"
 version = "0.3.0"
 edition = "2021"
-repository = "https://www.github.com/3ach/adventage"
+repository = "https://github.com/3ach/adventage"
 license = "MIT"
 description = "Advent of Code, easier!"
 
